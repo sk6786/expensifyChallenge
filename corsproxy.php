@@ -15,6 +15,12 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     default:
         $url = $_POST["url"]; 
         foreach ( $_POST as $key => $value) {
+            if ($key === 'partnerName'){
+                $value = getenv('parternName');
+            }
+            if ($key === 'partnerPassword'){
+                $value = getenv('parternPassword');
+            }
             $fields[$key] = $value;
         }
         break;

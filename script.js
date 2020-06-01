@@ -160,7 +160,7 @@ function authenticate(e){
     $.ajax({
         type: 'post',
         url: url,
-        data:{ 'url':'https://www.expensify.com/api?command=Authenticate', 'partnerName': 'applicant', 'partnerPassword' : 'd7c3119c6cdab02d68d9', 'partnerUserID': email, 'partnerUserSecret': password },
+        data:{ 'url':'https://www.expensify.com/api?command=Authenticate', 'partnerName': '', 'partnerPassword' : '', 'partnerUserID': email, 'partnerUserSecret': password },
         success: function(data){
             var data = JSON.parse(data);
             if (data["jsonCode"] !== 200){
@@ -211,7 +211,8 @@ function renderTable(data){
     for (var i= 0; i<data.length; i++) {
     newRows += "<tr><td class='column1'>" + data[i].created + "</td><td class='column2'>" + data[i].merchant + "</td><td class='column3'>" + data[i].amount.toString()+ "</td></tr>";
     }
-    $("#transactionTableBody tbody").append(newRows, $('.loading').hide());
+    $("#transactionTableBody tbody").append(newRows);
+    $('.loading').hide();
     $('#addTransaction').removeClass("opacity");
     $('#tableBody').removeClass("opacity");
     $('#addTransaction').prop('disabled', false);

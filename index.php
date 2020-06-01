@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php header('Access-Control-Allow-Origin: *'); ?>
 <head>
     <meta charset="UTF-8">
     <title>Expensify Take-Home Challenge</title>
