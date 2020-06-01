@@ -110,6 +110,7 @@ function renderTransactions(getNewTransactions = true){
     $('#transactions').show();
     if (getNewTransactions){ 
         $('#addTransaction').addClass("opacity");
+        $('#tableBody').addClass("opacity");
         $('#addTransaction').prop('disabled', true);
         $('.loading').show();
         getTransactions();
@@ -212,6 +213,7 @@ function renderTable(data){
     }
     $("#transactionTableBody tbody").append(newRows, $('.loading').hide());
     $('#addTransaction').removeClass("opacity");
+    $('#tableBody').removeClass("opacity");
     $('#addTransaction').prop('disabled', false);
 }
 
