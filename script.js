@@ -17,11 +17,6 @@ $(document).ready(function(){
      $('#main').on('submit','#transForm',function(e) {
         addTransaction(e);
      });
-    if (performance.navigation.type == 1) {
-        console.info( "This page is reloaded" );
-      } else {
-        console.info( "This page is not reloaded");
-      }
 
 
 function setCookie(name,value) {
@@ -76,7 +71,7 @@ function addTransaction(e){
             }
         },
         fail:function(data){
-            console.log('request failed');
+            alert('Please Try Again');
         }
     });
     
@@ -171,7 +166,7 @@ function authenticate(e){
             }
         },
         fail:function(data){
-            console.log('request failed');
+            alert('Please Try Again');
         }
         });
 }
@@ -200,7 +195,7 @@ function getTransactions(){
             }
         },
         fail:function(data){
-            console.log('request failed');
+            alert('Please Try Again');
          }
         });
         return false;
