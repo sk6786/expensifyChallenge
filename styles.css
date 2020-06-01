@@ -210,6 +210,34 @@ footer a {
     text-decoration: none;
 }
 
+.transactionBut{
+    width:100%;
+}
+.addBut{
+    float: right;
+}
+.logoutBut{
+    float:right;
+    background-color:transparent;
+    color: black;
+
+}
+.logout{
+    position:absolute;
+    width:800px;
+}
+#transactions > .logout {
+    position:absolute;
+    width:950px;
+}
+
+.logoutBut:hover{
+    background-color: #2ecb70;
+}
+.cancel{
+	border: 1px solid #808080;
+	background-color: #808080;
+}
 #transactions, #loginContent, #transactionForm{
     display: none;
 }
@@ -251,6 +279,9 @@ table {
     line-height: 1.4;
 }
   
+.opacity{
+    opacity:.2;
+}
 #transactionTableBody tr:nth-child(even) {
     background-color: #f8f6ff;
 }
@@ -307,7 +338,9 @@ table {table-layout: fixed;
 td{
     word-wrap: break-word;
 }
-
+#transactionForm .loading{
+    top:100px;
+}
 .loading{
     left: 0;
     right: 0;

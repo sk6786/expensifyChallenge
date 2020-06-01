@@ -4,8 +4,15 @@ $(document).ready(function(){
     $('#main').on('submit','#signInForm',function(e){
        authenticate(e);
     });
+    $('#main').on('click','.logoutBut',function(e){
+        deleteCookie('authToken');
+        renderLogin();
+     });
     $('#main').on('click', '#addTransaction',function(e) {
         renderTransactionForm();
+     });
+     $('#main').on('click', '#cancelTrans',function(e) {
+        renderTransactions(false);
      });
      $('#main').on('submit','#transForm',function(e) {
         addTransaction(e);
@@ -40,6 +47,8 @@ function deleteCookie(name){
 function addTransaction(e){
     e.preventDefault();
     e.stopPropagation(); 
+    $('#transForm').addClass("opacity");
+    $('.loading').show();
     var authToken = getCookie('authToken');
     var date = $("#date").val().trim();
     var merchant =  $("#merchant").val().trim();
@@ -50,6 +59,8 @@ function addTransaction(e){
         url: url,
         data:{ 'url':'https://www.expensify.com/api?command=CreateTransaction', 'authToken': authToken, 'created' : date,  'amount': amount,'merchant': merchant },
         success: function(data){
+            $('#transForm').removeClass("opacity");
+            $('.loading').hide();
             var data = JSON.parse(data);
             if (data["jsonCode"] == 407){
                 alert("Session expired. Please login again");
@@ -59,7 +70,7 @@ function addTransaction(e){
             else if (data["jsonCode"] == 402){
                 $('#formError').show();
             }
-            else{
+            else{ 
                 renderTransactions(false);
                 renderTable(data['transactionList']);
             }
@@ -72,32 +83,35 @@ function addTransaction(e){
 }
 
 function renderTransactionForm(){ 
-    tempLogin =  $('#loginContent').hide().detach();
-    tempTransactions = $('#transactions').hide().detach();
-    if (tempLogin){
+    tempLogin =  $('#loginContent').detach();
+    tempTransactions = $('#transactions').detach();
+    if (tempLogin.length>0){
         login = tempLogin;
     }
-    if (tempTransactions){
-        transactions = tempTransactions
+    if (tempTransactions.length>0){
+        transactions = tempTransactions;
     }
     $('#main').append(transactionForm);
+    $('#formError').hide();
+    $("#transForm").trigger('reset'); 
     $('#transactionForm').show();
 }
 
 function renderTransactions(getNewTransactions = true){
-    tempLogin =  $('#loginContent').hide().detach();
-    tempTransactionForm = $('#transactionForm').hide().detach();
-    if (tempLogin){
+    tempLogin =  $('#loginContent').detach();
+    tempTransactionForm = $('#transactionForm').detach();
+    if (tempLogin.length>0){
         login = tempLogin;
     }
-    if (tempTransactionForm){
+    if (tempTransactionForm.length>0){
         transactionForm = tempTransactionForm
     }
     $('#main').append(transactions);
-    $('.loading').show();
-    $('#addTransaction').prop('disabled', true);
     $('#transactions').show();
-    if (getNewTransactions){
+    if (getNewTransactions){ 
+        $('#addTransaction').addClass("opacity");
+        $('#addTransaction').prop('disabled', true);
+        $('.loading').show();
         getTransactions();
     }
 
@@ -108,15 +122,17 @@ function renderLogin(){
         renderTransactions();
     }
     else{
-        tempTransactions =  $('#transactions').hide().detach();
-        tempTransactionForm = $('#transactionForm').hide().detach();
-        if (tempTransactions){
+        tempTransactions =  $('#transactions').detach();
+        tempTransactionForm = $('#transactionForm').detach();
+        if (tempTransactions.length>0){
             transactions = tempTransactions;
         }
-        if (tempTransactionForm){
+        if (tempTransactionForm.length>0){
             transactionForm = tempTransactionForm
         }
         $('#main').append(login);
+        $("#signInForm").trigger('reset'); 
+        $("#loginError").hide(); 
         $('#loginContent').show();
     }
 }
@@ -195,6 +211,7 @@ function renderTable(data){
     newRows += "<tr><td class='column1'>" + data[i].created + "</td><td class='column2'>" + data[i].merchant + "</td><td class='column3'>" + data[i].amount.toString()+ "</td></tr>";
     }
     $("#transactionTableBody tbody").append(newRows, $('.loading').hide());
+    $('#addTransaction').removeClass("opacity");
     $('#addTransaction').prop('disabled', false);
 }
 
@@ -202,4 +219,3 @@ function renderTable(data){
 
 
 });
-
