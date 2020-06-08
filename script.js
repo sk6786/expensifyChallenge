@@ -5,7 +5,6 @@ $(document).ready(function(){
        authenticate(e);
     });
     $('#main').on('click','.logoutBut',function(e){
-        $('#tableBody').html('');
         deleteCookie('authToken');
         renderLogin();
      });
@@ -90,7 +89,7 @@ function renderTransactionForm(){
     $('#main').append(transactionForm);
     $('#formError').hide();
     $("#transForm").trigger('reset'); 
-    $('#transactionForm').show();
+    $('#transactionForm').css("display", "block");
 }
 
 function renderTransactions(getNewTransactions = true){
@@ -103,12 +102,12 @@ function renderTransactions(getNewTransactions = true){
         transactionForm = tempTransactionForm
     }
     $('#main').append(transactions);
-    $('#transactions').show();
+    $('#transactions').css("display", "block");
     if (getNewTransactions){ 
         $('#addTransaction').addClass("opacity");
         $('#tableBody').addClass("opacity");
         $('#addTransaction').prop('disabled', true);
-        $('.loading').show();
+        $('.loading').css("display", "block");
         getTransactions();
     }
 
@@ -130,7 +129,7 @@ function renderLogin(){
         $('#main').append(login);
         $("#signInForm").trigger('reset'); 
         $("#loginError").hide(); 
-        $('#loginContent').show();
+        $('#loginContent').css("display", "block");
     }
 }
 
