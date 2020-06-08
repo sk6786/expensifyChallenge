@@ -5,7 +5,7 @@ $(document).ready(function(){
        authenticate(e);
     });
     $('#main').on('click','.logoutBut',function(e){
-        ('#tableBody').html('');
+        $('#tableBody').html('');
         deleteCookie('authToken');
         renderLogin();
      });
