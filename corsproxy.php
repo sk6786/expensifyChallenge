@@ -16,7 +16,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $url = $_POST["url"]; 
         foreach ( $_POST as $key => $value) {
             if ($key === 'partnerName'){
-                $value = getenv('APPSETTING_parternName');
+                $value = getenv('APPSETTING_partnerName');
             }
             if ($key === 'partnerPassword'){
                 $value = getenv('APPSETTING_partnerPassword');
