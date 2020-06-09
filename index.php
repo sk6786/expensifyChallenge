@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Expensify Take-Home Challenge</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css" rel="preload" as="css">
 </head>
 <body id='main'>
     <div id="loginContent">
@@ -17,10 +17,8 @@
     <div id="transactionForm">
         <?php include 'transactionForm.html';?>
     </div> 
-
-    <!-- Javascript Files, we've included JQuery here, feel free to use at your discretion. Add whatever else you may need here too. -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" rel="preconnect"></script>
+    <script type="text/javascript" src="script.js" rel="preload" as="script"></script>
 
 </body>
 </html>

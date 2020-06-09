@@ -42,8 +42,7 @@ function deleteCookie(name){
 function addTransaction(e){
     e.preventDefault();
     e.stopPropagation(); 
-    $('#transForm').addClass("opacity");
-    $('.loading').show();
+    showLoader($('#transForm'));
     var authToken = getCookie('authToken');
     var date = $("#date").val().trim();
     var merchant =  $("#merchant").val().trim();
@@ -54,8 +53,7 @@ function addTransaction(e){
         url: url,
         data:{ 'url':'https://www.expensify.com/api?command=CreateTransaction', 'authToken': authToken, 'created' : date,  'amount': amount,'merchant': merchant },
         success: function(data){
-            $('#transForm').removeClass("opacity");
-            $('.loading').hide();
+            hideLoader($('#transform'));
             var data = JSON.parse(data);
             if (data["jsonCode"] == 407){
                 alert("Session expired. Please login again");
@@ -90,6 +88,7 @@ function renderTransactionForm(){
     $('#formError').hide();
     $("#transForm").trigger('reset'); 
     $('#transactionForm').css("display", "block");
+
 }
 
 function renderTransactions(getNewTransactions = true){
@@ -104,10 +103,9 @@ function renderTransactions(getNewTransactions = true){
     $('#main').append(transactions);
     $('#transactions').css("display", "block");
     if (getNewTransactions){ 
-        $('#addTransaction').addClass("opacity");
-        $('#tableBody').addClass("opacity");
         $('#addTransaction').prop('disabled', true);
-        $('.loading').css("display", "block");
+        $('#addTransaction').addClass("opacity");
+        showLoader($('#tableBody'));
         getTransactions();
     }
 
@@ -144,7 +142,16 @@ function convertMoney(dollars){
 
 }
 
+function showLoader(opacityContainer){
+    opacityContainer.addClass("opacity");
+    $('.loading').css('display', 'block');
+}
 
+function hideLoader(opacityContainer){
+    opacityContainer.removeClass("opacity");
+    $('.loading').css('display', 'none');
+
+}
 
 function authenticate(e){
     e.preventDefault();
@@ -202,16 +209,19 @@ function getTransactions(){
 }
 
 function renderTable(data){
-    var newRows = "";
+    var newRows = document.createDocumentFragment();
     for (var i= 0; i<data.length; i++) {
-    newRows += "<tr><td class='column1'>" + data[i].created + "</td><td class='column2'>" + data[i].merchant + "</td><td class='column3'>" + data[i].amount.toString()+ "</td></tr>";
+    var row = document.createElement("tr");
+    row.innerHTML="<td class='column1'>" + data[i].created + "</td><td class='column2'>" + data[i].merchant + "</td><td class='column3'>" + data[i].amount.toString()+ "</td>"
+    newRows.appendChild(row);
     }
-    $("#transactionTableBody tbody").append(newRows);
-    $('.loading').hide();
+    document.getElementById("tableBody").appendChild(newRows);
+    hideLoader($('#tableBody'));
+    //allow add transition button to be clicked
     $('#addTransaction').removeClass("opacity");
-    $('#tableBody').removeClass("opacity");
     $('#addTransaction').prop('disabled', false);
 }
+
 
 
 
